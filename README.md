@@ -129,14 +129,14 @@ lodash 라이브러리에서 제공하는 다양한 메소드를 이용해 데�
 > - 가장 좌측의 별을 클릭해 북마크를 설정 및 해제 가능하며 북마크된 경우 채워진 별, 해제된 경우 빈 별로 표기됩니다. 별을 클릭 시에 해당 좌표를 기준으로 하단에 Toast 알림이 떠오르며 이는 Vue.js의 transition을 이용해 fade 효과를 가진 component로 만들어져 있습니다.
 > - 가상 자산의 이름을 클릭 시 가상 자산 정보 페이지로 이동합니다.
 
-![list](.\images\list.PNG)
+![list](./images/list.PNG)
 
 ### 북마크 목록
 
 > - 위의 가상 자산 목록 화면의 구현 내용과 거의 흡사하며 해당 화면에서 셀렉트 박스 및 더보기 버튼이 빠진 화면입니다.
 > - 좌측의 채워진 별을 클릭 시에 목록에서 해당 자산이 사라지며 클릭된 좌표를 기준으로 하단에 Toast 알림이 떠오르며 이는 Vue.js의 transition을 이용해 fade 효과를 가진 component로 만들어져 있습니다.
 
-![bookmarklist](.\images\bookmarklist.PNG)
+![bookmarklist](./images/bookmarklist.PNG)
 
 ### 가상 자산 정보
 
@@ -154,4 +154,4 @@ lodash 라이브러리에서 제공하는 다양한 메소드를 이용해 데�
 >
 > - 설명의 경우 설명보기 버튼을 클릭하면 표시되며 기본 한글, 한글이 없을 경우 영어로 표시됩니다. 둘 다 없을 경우 설명보기 영역이 표시되지 않습니다.
 
-![detail](.\images\detail.PNG)
+![detail](./images/detail.PNG)
