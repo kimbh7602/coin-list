@@ -99,27 +99,31 @@ export default {
 
         // coinDetail 객체가 바뀔 때 콜백 함수 실행 (현재는 렌더링이 된 후 객체에 값이 들어오는 상황)
         coinDetail: function (detailData) {
+            // 자주 쓰이는 객체 변수 선언
+            const marketData = detailData?.market_data;
             this.marketCapRank = detailData?.market_cap_rank;
-            this.currentPrice = replace(toString(detailData?.market_data?.current_price?.krw), DIGIT_REG_PATTERN, COMMA);
-            this.currentPriceBtc = detailData?.market_data?.current_price?.btc.toFixed(8);
-            this.percentage24h = detailData?.market_data?.price_change_percentage_24h.toFixed(1);
-            this.percentage7d = detailData?.market_data?.price_change_percentage_7d.toFixed(1);
+            this.currentPrice = replace(toString(marketData?.current_price?.krw), DIGIT_REG_PATTERN, COMMA);
+            this.currentPriceBtc = marketData?.current_price?.btc.toFixed(8);
+            this.percentage24h = marketData?.price_change_percentage_24h.toFixed(1);
+            this.percentage7d = marketData?.price_change_percentage_7d.toFixed(1);
             this.homepage = detailData?.links?.homepage[0];
-            this.marketCap = replace(toString(detailData?.market_data?.market_cap?.krw), DIGIT_REG_PATTERN, COMMA);
-            this.totalVolume = replace(toString(detailData?.market_data?.total_volume?.krw), DIGIT_REG_PATTERN, COMMA);
+            this.marketCap = replace(toString(marketData?.market_cap?.krw), DIGIT_REG_PATTERN, COMMA);
+            this.totalVolume = replace(toString(marketData?.total_volume?.krw), DIGIT_REG_PATTERN, COMMA);
         },
 
         // detailCurrency 값이 바뀔 때 콜백 함수 실행
         // currency 에 따라 금액 변경
         detailCurrency: function (newCurrency) {
+            // 자주 쓰이는 객체 변수 선언
+            const marketData = this.coinDetail?.market_data;
             if(newCurrency === KRW) {
-                this.currentPrice = replace(toString(this.coinDetail?.market_data?.current_price?.krw), DIGIT_REG_PATTERN, COMMA);
-                this.marketCap = replace(toString(this.coinDetail?.market_data?.market_cap?.krw), DIGIT_REG_PATTERN, COMMA);
-                this.totalVolume = replace(toString(this.coinDetail?.market_data?.total_volume?.krw), DIGIT_REG_PATTERN, COMMA);
+                this.currentPrice = replace(toString(marketData?.current_price?.krw), DIGIT_REG_PATTERN, COMMA);
+                this.marketCap = replace(toString(marketData?.market_cap?.krw), DIGIT_REG_PATTERN, COMMA);
+                this.totalVolume = replace(toString(marketData?.total_volume?.krw), DIGIT_REG_PATTERN, COMMA);
             } else {
-                this.currentPrice = replace(toString(this.coinDetail?.market_data?.current_price?.usd), DIGIT_REG_PATTERN, COMMA);
-                this.marketCap = replace(toString(this.coinDetail?.market_data?.market_cap?.usd), DIGIT_REG_PATTERN, COMMA);
-                this.totalVolume = replace(toString(this.coinDetail?.market_data?.total_volume?.usd), DIGIT_REG_PATTERN, COMMA);
+                this.currentPrice = replace(toString(marketData?.current_price?.usd), DIGIT_REG_PATTERN, COMMA);
+                this.marketCap = replace(toString(marketData?.market_cap?.usd), DIGIT_REG_PATTERN, COMMA);
+                this.totalVolume = replace(toString(marketData?.total_volume?.usd), DIGIT_REG_PATTERN, COMMA);
             }
         }
     }
