@@ -43,8 +43,9 @@ export default {
       // coinDetail data가 바뀔 때 콜백 함수 실행 description이 있는 경우 넣어주고 없으면 그냥 공백을 넣어줌
       // JSON String 내의 개행문자 <br /> 태그로 바꿔줌
       coinDetail: function(detailData) {
-        this.ko = detailData?.description?.ko ? replace(detailData?.description?.ko, LINE_BREAK_REG_PATTERN, LINE_BREAK) : '';
-        this.en = detailData?.description?.en ? replace(detailData?.description?.en, LINE_BREAK_REG_PATTERN, LINE_BREAK) : '';
+        const descript = detailData?.description;
+        this.ko = descript?.ko ? replace(descript?.ko, LINE_BREAK_REG_PATTERN, LINE_BREAK) : '';
+        this.en = descript?.en ? replace(descript?.en, LINE_BREAK_REG_PATTERN, LINE_BREAK) : '';
         this.setLoaded();
       }
     }

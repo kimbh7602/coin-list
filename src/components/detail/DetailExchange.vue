@@ -56,12 +56,12 @@ export default {
     changePrice(evt) {
       const _value = evt?.target?.value;
       const POINT_EIGHT_REG_PATTERN = /^\d*[.]\d{8}$/; // 소수점 아래 8자리까지만 허용하는 정규식
-      
+
       // 현재 value값이 소수점 여덟째자리 숫자이면 더이상 입력 불가
       if (POINT_EIGHT_REG_PATTERN.test(_value)) {
         evt.preventDefault();
       }
-      
+
       const detailCurrency = this.coinDetail?.market_data?.current_price?.[this.detailCurrency];
       const exchangePrice = toString(round(replace(this.price, COMMA_REG_PATTERN, EMPTY_STR) * detailCurrency));
       this.exchangePrice = replace(exchangePrice, DIGIT_REG_PATTERN, COMMA);
@@ -115,9 +115,15 @@ export default {
 
     onPaste(evt) {
       const _value = evt.clipboardData.getData('text');
-      const ZERO_START_REG_PATTERN = /(^0+)/;
+      const ZERO_START_REG_PATTERN = /(^0+)/; // 0으로 시작하는지 판별하는 정규식
+      const DOT_START_REG_PATTERN = /(^\.+)/; // .으로 시작하는지 판별하는 정규식
 
       if (isNaN(_value)) {
+        evt.preventDefault();
+      }
+
+      // .으로 시작하는 값을 붙여넣기 할 경우 입력 불가
+      if (DOT_START_REG_PATTERN.test(_value)) {
         evt.preventDefault();
       }
 
@@ -147,11 +153,12 @@ export default {
 
     // detailCurrency가 바뀔 때 콜백함수 실행 -> 바뀐 currency의 가격으로 계산된 값 넣어주기
     detailCurrency: function (newCurrency) {
+      const currentPrice = this.coinDetail?.market_data?.current_price;
       if(newCurrency === KRW) {
-        const exchangePriceStr = toString(this.price * this.coinDetail?.market_data?.current_price?.krw);
+        const exchangePriceStr = toString(this.price * currentPrice?.krw);
         this.exchangePrice = this.convertPrice(exchangePriceStr);
       }else {
-        const exchangePriceStr = toString(this.price * this.coinDetail?.market_data?.current_price?.usd);
+        const exchangePriceStr = toString(this.price * currentPrice?.usd);
         this.exchangePrice = this.convertPrice(exchangePriceStr);
       }
       this.setLoaded();

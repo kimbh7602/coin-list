@@ -82,20 +82,23 @@ export default {
         },
 
         percent1h: function() {
-            return this.coinInfo?.price_change_percentage_1h_in_currency !== null
-                ? this.coinInfo?.price_change_percentage_1h_in_currency.toFixed(2)
+            const percent1h = this.coinInfo?.price_change_percentage_1h_in_currency;
+            return percent1h !== null
+                ? percent1h.toFixed(2)
                 : 0;
         },
         
         percent24h: function() {
-            return this.coinInfo?.price_change_percentage_24h_in_currency !== null
-                ? this.coinInfo?.price_change_percentage_24h_in_currency.toFixed(2)
+            const percent24h = this.coinInfo?.price_change_percentage_24h_in_currency;
+            return percent24h !== null
+                ? percent24h.toFixed(2)
                 : 0;
         },
         
         percent7d: function() {
-            return this.coinInfo?.price_change_percentage_7d_in_currency !== null
-                ? this.coinInfo?.price_change_percentage_7d_in_currency.toFixed(2)
+            const percent7d = this.coinInfo?.price_change_percentage_7d_in_currency;
+            return percent7d !== null
+                ? percent7d.toFixed(2)
                 : 0;
         },
 
@@ -106,7 +109,7 @@ export default {
 
     methods: {
         ...mapMutations(['addBookmark', 'removeBookmark', 'toastOpen']),
-        
+
         handleClickStar(evt) {
             if(this.coinInfo.isMarked) {
                 this.coinInfo.isMarked = !this.coinInfo.isMarked;
