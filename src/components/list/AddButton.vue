@@ -10,8 +10,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex';
-import {setLoading, setLoaded, addPage} from '../../store/type'
+import {mapState, mapActions, mapMutations} from 'vuex';
 export default {
     computed: {
         ...mapState(['currency', 'per_page', 'page']),
@@ -19,10 +18,11 @@ export default {
 
     methods: {
         ...mapActions(['addCoinList']),
+        ...mapMutations(['setLoading', 'setLoaded', 'addPage']),
 
         handleClickAddBtn() {
-          this.$store.commit(setLoading);
-          this.$store.commit(addPage);
+          this.setLoading();
+          this.addPage();
 
           const param = {
             currency: this.currency,
@@ -31,7 +31,7 @@ export default {
           };
 
           this.addCoinList(param);
-          this.$store.commit(setLoaded);
+          this.setLoaded();
         }
     }
 }

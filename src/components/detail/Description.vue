@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import {setLoaded} from "@/store/type";
+import { mapMutations, mapState } from 'vuex';
 import {replace} from 'lodash';
 
 const LINE_BREAK_REG_PATTERN = /\r\n/g; // JSON 개행 문자
@@ -33,9 +32,11 @@ export default {
     },
 
     methods: {
-        handleClickDescriptionBtn() {
-            this.isOpen = !this.isOpen;
-        }
+      ...mapMutations(['setLoaded']),
+
+      handleClickDescriptionBtn() {
+        this.isOpen = !this.isOpen;
+      }
     },
 
     watch: {
@@ -44,7 +45,7 @@ export default {
       coinDetail: function(detailData) {
         this.ko = detailData?.description?.ko ? replace(detailData?.description?.ko, LINE_BREAK_REG_PATTERN, LINE_BREAK) : '';
         this.en = detailData?.description?.en ? replace(detailData?.description?.en, LINE_BREAK_REG_PATTERN, LINE_BREAK) : '';
-        this.$store.commit(setLoaded);
+        this.setLoaded();
       }
     }
 }

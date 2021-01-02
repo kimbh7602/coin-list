@@ -44,9 +44,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import {upperCase} from 'lodash'
-import {setLoading, setLoaded, addBookmark, removeBookmark, setDetailCurrency, toastOpen} from '../../store/type'
 export default {
     data: () => ({
         default_currency: {
@@ -67,12 +66,13 @@ export default {
 
     methods: {
       ...mapActions(['fetchCoinDetail']),
+      ...mapMutations(['setLoading', 'setLoaded', 'addBookmark', 'removeBookmark', 'setDetailCurrency', 'toastOpen']),
 
       handleClickStar(evt) {
         if(this.coinDetail.isMarked) {
           this.isMarked = !this.isMarked;
           this.coinDetail.isMarked = !this.coinDetail.isMarked;
-          this.$store.commit(removeBookmark, this.coinDetail);
+          this.removeBookmark(this.coinDetail);
           // toast 컴포넌트 호출
           const param = {
             isToastOpen: true,
@@ -80,11 +80,11 @@ export default {
             yPosition: `${evt.clientY+20}px`,
             message: '북마크가 해제되었습니다.',
           }
-          this.$store.commit(toastOpen, param);
+          this.toastOpen(param);
         }else {
           this.isMarked = !this.isMarked;
           this.coinDetail.isMarked = !this.coinDetail.isMarked;
-          this.$store.commit(addBookmark, this.coinDetail);
+          this.addBookmark(this.coinDetail);
           // toast 컴포넌트 호출
           const param = {
             isToastOpen: true,
@@ -92,14 +92,14 @@ export default {
             yPosition: `${evt.clientY+20}px`,
             message: '북마크가 설정되었습니다.',
           }
-          this.$store.commit(toastOpen, param);
+          this.toastOpen(param);
         }
       },
 
       changeDetailCurrency(value) {
-        this.$store.commit(setLoading);
-        this.$store.commit(setDetailCurrency, value);
-        this.$store.commit(setLoaded);
+        this.setLoading();
+        this.setDetailCurrency(value);
+        this.setLoaded();
       },
     },
 
@@ -125,7 +125,7 @@ export default {
 }
 
 .detail-name {
-    width: 20%;
+    width: 40%;
     font-size: 25px;
     font-weight: bold;
 }

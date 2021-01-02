@@ -7,15 +7,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import {toastClose} from '../store/type'
+import { mapMutations, mapState } from 'vuex';
 export default {
     computed: {
         ...mapState(['toastObj'])
     },
 
+    methods: {
+        ...mapMutations(['toastClose']),
+    },
+
     mounted() {
-        this.$store.commit(toastClose)
+        this.toastClose();
     },
 }
 </script>

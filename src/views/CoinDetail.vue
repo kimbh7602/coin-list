@@ -32,16 +32,6 @@ export default {
 
     methods: {
       ...mapActions(['fetchCoinDetail']),
-
-      handleClickStar() {
-        if(this.coinInfo.isMarked) {
-          this.coinDetail.isMarked = !this.coinDetail.isMarked;
-          this.$store.commit('removeBookmark', this.coinDetail);
-        }else {
-          this.coinDetail.isMarked = !this.coinDetail.isMarked;
-          this.$store.commit('addBookmark', this.coinDetail);
-        }
-      }
     },
 
     created() {

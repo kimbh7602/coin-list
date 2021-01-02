@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import {setLoading, setLoaded, setPage, setPerPage, setCurrency, setPageType} from '../../store/type'
+import { mapActions, mapMutations, mapState } from 'vuex';
 export default {
     data: () => ({
         default_page_type: {
@@ -63,17 +62,18 @@ export default {
 
     methods: {
       ...mapActions(['fetchCoinList', 'fetchBookmarkList']),
+      ...mapMutations(['setLoading', 'setLoaded', 'setPage', 'setPerPage', 'setCurrency', 'setPageType']),
       
       changePageType(value) {
-        this.$store.commit(setLoading);
-        this.$store.commit(setPageType, value);
+        this.setLoading();
+        this.setPageType(value);
         if(value === 'bookmarked'){
           const param = {
             currency: this.currency
           }
           this.fetchBookmarkList(param);
         }else {
-          this.$store.commit(setPage);
+          this.setPage();
           const param = {
             currency: this.currency,
             per_page: this.per_page,
@@ -81,12 +81,12 @@ export default {
           }
           this.fetchCoinList(param);
         }
-        this.$store.commit(setLoaded);
+        this.setLoaded();
       },
 
       changeCurrency(value) {
-        this.$store.commit(setLoading);
-        this.$store.commit(setCurrency, value);
+        this.setLoading();
+        this.setCurrency(value);
         if(this.page_type === 'bookmarked'){
           const param = {
             currency: this.currency
@@ -100,14 +100,14 @@ export default {
           }
           this.fetchCoinList(param);
         }
-        this.$store.commit(setLoaded);
+        this.setLoaded();
       },
 
       changePerPage(value) {
-        this.$store.commit(setLoading);
-        this.$store.commit(setPerPage, value);
+        this.setLoading();
+        this.setPerPage(value);
         if(this.page_type === 'normal'){
-          this.$store.commit(setPage);
+          this.setPage();
           const param = {
             currency: this.currency,
             per_page: this.per_page,
@@ -115,7 +115,7 @@ export default {
           }
           this.fetchCoinList(param);
         }
-        this.$store.commit(setLoaded);
+        this.setLoaded();
       }
     }
 }

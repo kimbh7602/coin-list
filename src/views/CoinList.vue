@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import {setParam, setLoaded, setPageType} from '../store/type'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import CoinListItem from '../components/list/CoinListItem'
 import TableHeader from '../components/list/TableHeader'
 import SelectboxGroup from '../components/list/SelectboxGroup'
@@ -41,29 +40,26 @@ export default {
         ButtonGroup,
         AddButton
     },
-   
-    data: () =>({
-    
-    }),
 
     computed: {
         ...mapState(['coinList', 'bookmarkList', 'currency', 'per_page', 'page', 'page_type']),
     },
 
     methods: {
-        ...mapActions(['fetchCoinList', 'addCoinList'])
+        ...mapActions(['fetchCoinList', 'addCoinList']),
+        ...mapMutations(['setPageType', 'setParam', 'setLoaded'])
     },
 
     created() {
-        this.$store.commit(setPageType, 'normal');
+        this.setPageType('normal');
         const param = {
             currency: 'krw',
             per_page: 10,
             page: 1,
         }
-        this.$store.commit(setParam, param);
+        this.setParam(param);
         this.fetchCoinList(param);
-        this.$store.commit(setLoaded);
+        this.setLoaded();
     },
 
     mounted() {

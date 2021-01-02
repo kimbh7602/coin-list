@@ -62,8 +62,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {addBookmark, removeBookmark, toastOpen} from '../../store/type'
+import {mapMutations, mapState} from 'vuex'
 import {upperCase, toString, replace} from 'lodash'
 
 const DIGIT_REG_PATTERN = /\B(?=(\d{3})+(?!\d))/g // 세자리 마다 쉼표를 넣는 정규식
@@ -106,10 +105,12 @@ export default {
     },
 
     methods: {
+        ...mapMutations(['addBookmark', 'removeBookmark', 'toastOpen']),
+        
         handleClickStar(evt) {
             if(this.coinInfo.isMarked) {
                 this.coinInfo.isMarked = !this.coinInfo.isMarked;
-                this.$store.commit(removeBookmark, this.coinInfo);
+                this.removeBookmark(this.coinInfo);
                 // toast 컴포넌트 호출
                 const param = {
                     isToastOpen: true,
@@ -117,10 +118,10 @@ export default {
                     yPosition: `${evt.clientY+20}px`,
                     message: '북마크가 해제되었습니다.',
                 }
-                this.$store.commit(toastOpen, param);
+                this.toastOpen(param);
             }else {
                 this.coinInfo.isMarked = !this.coinInfo.isMarked;
-                this.$store.commit(addBookmark, this.coinInfo);
+                this.addBookmark(this.coinInfo);
                 // toast 컴포넌트 호출
                 const param = {
                     isToastOpen: true,
@@ -128,7 +129,7 @@ export default {
                     yPosition: `${evt.clientY+20}px`,
                     message: '북마크가 설정되었습니다.',
                 }
-                this.$store.commit(toastOpen, param);
+                this.toastOpen(param);
             }
         },
 

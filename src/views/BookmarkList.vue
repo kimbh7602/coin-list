@@ -18,8 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import {setLoaded} from '../store/type'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import CoinListItem from '../components/list/CoinListItem'
 import TableHeader from '../components/list/TableHeader'
 import ButtonGroup from '../components/list/ButtonGroup'
@@ -29,16 +28,14 @@ export default {
         TableHeader,
         ButtonGroup,
     },
-   
-    data: () =>({
-    }),
-
+    
     computed: {
         ...mapState(['bookmarkList', 'currency']),
     },
 
     methods: {
-        ...mapActions(['fetchBookmarkList'])
+        ...mapActions(['fetchBookmarkList']),
+        ...mapMutations(['setLoaded'])
     },
 
     created() {
@@ -46,12 +43,8 @@ export default {
             currency: this.currency,
         }
         this.fetchBookmarkList(param);
-        this.$store.commit(setLoaded);
+        this.setLoaded();
     },
-
-    mounted() {
-        
-    }
 }
 </script>
 

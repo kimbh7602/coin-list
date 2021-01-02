@@ -17,9 +17,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapMutations, mapState} from 'vuex'
 import {head, includes, last as tail, replace, round, split, toString} from 'lodash'
-import {setLoaded} from "@/store/type";
 
 const EXCHANGE_ID = 'exchange' // input tag id
 const KRW = 'krw'
@@ -39,6 +38,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['setLoaded']),
     // 정수 부분은 세자리마다 쉼표를 넣어주고 소수점 8째 자리 이하는 잘라내는 함수
     convertPrice(price) {
       const FIRST_INDEX = 0
@@ -142,7 +142,7 @@ export default {
     coinDetail: function (detailData) {
       const exchangePriceStr = toString(this.price * detailData?.market_data?.current_price?.krw)
       this.exchangePrice = this.convertPrice(exchangePriceStr)
-      this.$store.commit(setLoaded);
+      this.setLoaded();
     },
 
     // detailCurrency가 바뀔 때 콜백함수 실행 -> 바뀐 currency의 가격으로 계산된 값 넣어주기
@@ -154,7 +154,7 @@ export default {
         const exchangePriceStr = toString(this.price * this.coinDetail?.market_data?.current_price?.usd);
         this.exchangePrice = this.convertPrice(exchangePriceStr);
       }
-      this.$store.commit(setLoaded);
+      this.setLoaded();
     }
   },
 
